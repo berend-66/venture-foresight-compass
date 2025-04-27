@@ -1,4 +1,3 @@
-
 export interface Startup {
   id: string;
   name: string;
@@ -51,6 +50,7 @@ export interface IndustryCluster {
 
 export interface UploadState {
   file?: File;
+  textInput?: string;
   processingStage: ProcessingStage;
   progress: number; // 0-100
   processedStartup?: Startup;
