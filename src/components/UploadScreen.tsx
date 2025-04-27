@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Startup, UploadState } from '@/types';
+import { Startup, UploadState, ProcessingStage } from '@/types';
 import TextInputSection from './upload/TextInputSection';
 import FileUploadSection from './upload/FileUploadSection';
 import ProcessingSection from './upload/ProcessingSection';

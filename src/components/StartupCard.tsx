@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Startup } from '@/types';
 import { cn } from '@/lib/utils';
@@ -7,12 +6,14 @@ interface StartupCardProps {
   startup: Startup;
   className?: string;
   minimal?: boolean;
+  onClick?: () => void;
 }
 
 export const StartupCard: React.FC<StartupCardProps> = ({ 
   startup, 
   className,
-  minimal = false
+  minimal = false,
+  onClick
 }) => {
   const getMatchScoreColor = (score: number) => {
     if (score >= 80) return "text-venture-accent-success";
@@ -34,10 +35,13 @@ export const StartupCard: React.FC<StartupCardProps> = ({
 
   if (minimal) {
     return (
-      <div className={cn(
-        "bg-white rounded-lg shadow-sm border border-venture-gray-200 p-4 transition-all duration-200",
-        className
-      )}>
+      <div 
+        className={cn(
+          "bg-white rounded-lg shadow-sm border border-venture-gray-200 p-4 transition-all duration-200",
+          className
+        )}
+        onClick={onClick}
+      >
         <div className="flex items-center justify-between">
           <h3 className="font-medium text-venture-blue-900 truncate">{startup.name}</h3>
           <span className={cn(
@@ -55,10 +59,13 @@ export const StartupCard: React.FC<StartupCardProps> = ({
   }
 
   return (
-    <div className={cn(
-      "bg-white rounded-lg shadow-md border border-venture-gray-200 p-4 transition-all duration-200 hover:shadow-lg",
-      className
-    )}>
+    <div 
+      className={cn(
+        "bg-white rounded-lg shadow-md border border-venture-gray-200 p-4 transition-all duration-200 hover:shadow-lg",
+        className
+      )}
+      onClick={onClick}
+    >
       <div className="flex items-center justify-between mb-2">
         <h3 className="font-semibold text-venture-blue-900 text-lg">{startup.name}</h3>
         <div className="text-sm">
