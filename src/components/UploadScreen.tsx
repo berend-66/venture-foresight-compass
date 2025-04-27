@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { ProcessingStage, Startup, UploadState } from '@/types';
-import ProgressIndicator from './ProgressIndicator';
-import StartupCard from './StartupCard';
-import { toast } from 'sonner';
-import { Textarea } from '@/components/ui/textarea';
-import { FileTextIcon } from 'lucide-react';
-import { Label } from '@/components/ui/label';
+import { Startup, UploadState } from '@/types';
+import TextInputSection from './upload/TextInputSection';
+import FileUploadSection from './upload/FileUploadSection';
+import ProcessingSection from './upload/ProcessingSection';
 
 interface UploadScreenProps {
   onComplete: (startup: Startup) => void;
@@ -22,44 +18,27 @@ export const UploadScreen: React.FC<UploadScreenProps> = ({
     processingStage: 'idle',
     progress: 0
   });
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleTextChange = (text: string) => {
+    setUploadState({
+      ...uploadState,
+      textInput: text,
+      processingStage: 'idle',
+      progress: 0
+    });
+  };
 
   const handleTextSubmit = () => {
-    if (!uploadState.textInput?.trim()) {
-      toast.error('Please enter a startup description');
-      return;
-    }
-    
     setUploadState({
       ...uploadState,
       processingStage: 'processing',
       progress: 0
     });
     
-    // Simulate processing
     simulateProcessing();
   };
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setUploadState({
-      ...uploadState,
-      textInput: e.target.value,
-      processingStage: 'idle',
-      progress: 0
-    });
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    
-    // Check file type
-    const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'];
-    if (!validTypes.includes(file.type)) {
-      toast.error('Please upload a PDF, PowerPoint, or text file');
-      return;
-    }
-    
+  const handleFileSelect = (file: File) => {
     setUploadState({
       ...uploadState,
       file,
@@ -67,40 +46,7 @@ export const UploadScreen: React.FC<UploadScreenProps> = ({
       progress: 0
     });
     
-    // Simulate upload progress
     simulateProcessing();
-  };
-
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    
-    const file = e.dataTransfer.files?.[0];
-    if (!file) return;
-    
-    // Check file type
-    const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain'];
-    if (!validTypes.includes(file.type)) {
-      toast.error('Please upload a PDF, PowerPoint, or text file');
-      return;
-    }
-    
-    setUploadState({
-      ...uploadState,
-      file,
-      processingStage: 'uploading',
-      progress: 0
-    });
-    
-    // Simulate upload progress
-    simulateProcessing();
-  };
-
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
-  
-  const triggerFileInput = () => {
-    fileInputRef.current?.click();
   };
   
   const simulateProcessing = () => {
@@ -158,8 +104,6 @@ export const UploadScreen: React.FC<UploadScreenProps> = ({
             progress: 100,
             processedStartup: mockStartup
           });
-          
-          toast.success('Analysis complete!');
         }, 500);
       } else {
         setUploadState({
@@ -170,13 +114,7 @@ export const UploadScreen: React.FC<UploadScreenProps> = ({
       }
     }, 200);
   };
-  
-  const handleProcessingComplete = () => {
-    if (uploadState.processedStartup) {
-      onComplete(uploadState.processedStartup);
-    }
-  };
-  
+
   return (
     <div className={cn("p-6", className)}>
       <div className="max-w-2xl mx-auto space-y-8">
@@ -190,24 +128,12 @@ export const UploadScreen: React.FC<UploadScreenProps> = ({
         </div>
 
         <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="startup-description">Startup Description</Label>
-            <Textarea
-              id="startup-description"
-              placeholder="Paste or enter the startup's description here..."
-              className="min-h-[200px] font-mono text-sm"
-              value={uploadState.textInput || ''}
-              onChange={handleTextChange}
-            />
-            <Button 
-              onClick={handleTextSubmit}
-              className="w-full bg-venture-blue-800 hover:bg-venture-blue-700"
-              disabled={uploadState.processingStage !== 'idle' || !uploadState.textInput?.trim()}
-            >
-              <FileTextIcon className="w-4 h-4 mr-2" />
-              Analyze Description
-            </Button>
-          </div>
+          <TextInputSection 
+            textInput={uploadState.textInput}
+            processingStage={uploadState.processingStage}
+            onTextChange={handleTextChange}
+            onSubmit={handleTextSubmit}
+          />
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
@@ -221,62 +147,18 @@ export const UploadScreen: React.FC<UploadScreenProps> = ({
           </div>
 
           {uploadState.processingStage === 'idle' ? (
-            <div 
-              onDrop={handleDrop}
-              onDragOver={handleDragOver}
-              className="border-2 border-dashed border-venture-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-venture-blue-600 transition-colors bg-venture-gray-100"
-              onClick={triggerFileInput}
-            >
-              <input 
-                type="file" 
-                ref={fileInputRef}
-                className="hidden" 
-                onChange={handleFileChange}
-                accept=".pdf,.pptx,.txt"
-              />
-              <div className="mb-4">
-                <FileTextIcon className="w-16 h-16 mx-auto text-venture-gray-400" />
-              </div>
-              <p className="text-venture-gray-600 mb-2">
-                Drag and drop your pitch deck or memo here
-              </p>
-              <p className="text-venture-gray-500 text-sm">
-                or click to browse files (PDF, PowerPoint, or Text)
-              </p>
-            </div>
+            <FileUploadSection 
+              processingStage={uploadState.processingStage}
+              onFileSelect={handleFileSelect}
+            />
           ) : (
-            <div className="space-y-8">
-              <div className="bg-venture-gray-100 rounded-lg p-6">
-                {uploadState.file && (
-                  <p className="text-center text-venture-blue-800 font-medium mb-4">
-                    {uploadState.file.name}
-                  </p>
-                )}
-                <ProgressIndicator 
-                  stage={uploadState.processingStage}
-                  progress={uploadState.progress}
-                  onComplete={handleProcessingComplete}
-                />
-              </div>
-              
-              {uploadState.processedStartup && (
-                <div className="animate-fade-in">
-                  <h2 className="text-lg font-medium text-venture-blue-900 mb-4">
-                    Analysis Results
-                  </h2>
-                  <StartupCard startup={uploadState.processedStartup} />
-                  
-                  <div className="mt-6 text-center">
-                    <Button 
-                      onClick={() => onComplete(uploadState.processedStartup)}
-                      className="bg-venture-blue-800 hover:bg-venture-blue-700"
-                    >
-                      View Detailed Analysis
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </div>
+            <ProcessingSection 
+              file={uploadState.file}
+              progress={uploadState.progress}
+              stage={uploadState.processingStage}
+              processedStartup={uploadState.processedStartup}
+              onComplete={onComplete}
+            />
           )}
         </div>
       </div>
