@@ -18,8 +18,8 @@ export const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
 }) => {
   const [steps, setSteps] = useState([
     { id: 'uploading', label: 'Uploading', completed: false },
-    { id: 'processing', label: 'Processing Pitch', completed: false },
-    { id: 'analyzing', label: 'Analyzing Metrics', completed: false },
+    { id: 'processing', label: 'Processing Data', completed: false },
+    { id: 'analyzing', label: 'Running Algorithm', completed: false },
     { id: 'complete', label: 'Prediction Complete', completed: false },
   ]);
 

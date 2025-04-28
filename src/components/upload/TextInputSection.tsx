@@ -22,7 +22,7 @@ export const TextInputSection: React.FC<TextInputSectionProps> = ({
 }) => {
   const handleSubmit = () => {
     if (!textInput?.trim()) {
-      toast.error('Please enter a startup description');
+      toast.error('Please enter a startup memo');
       return;
     }
     onSubmit();
@@ -30,10 +30,10 @@ export const TextInputSection: React.FC<TextInputSectionProps> = ({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor="startup-description">Startup Description</Label>
+      <Label htmlFor="startup-description">Startup Memo</Label>
       <Textarea
         id="startup-description"
-        placeholder="Paste or enter the startup's description here..."
+        placeholder="Paste or enter the startup's memo here..."
         className="min-h-[200px] font-mono text-sm"
         value={textInput || ''}
         onChange={(e) => onTextChange(e.target.value)}
@@ -44,7 +44,7 @@ export const TextInputSection: React.FC<TextInputSectionProps> = ({
         disabled={processingStage !== 'idle' || !textInput?.trim()}
       >
         <FileTextIcon className="w-4 h-4 mr-2" />
-        Analyze Description
+        Perform Prediction
       </Button>
     </div>
   );
