@@ -71,7 +71,7 @@ export const FileUploadSection: React.FC<FileUploadSectionProps> = ({
         <FileTextIcon className="w-16 h-16 mx-auto text-venture-gray-400" />
       </div>
       <p className="text-venture-gray-600 mb-2">
-        Drag and drop your pitch deck or memo here
+        Drag and drop your pitch deck here
       </p>
       <p className="text-venture-gray-500 text-sm">
         or click to browse files (PDF, PowerPoint, or Text)

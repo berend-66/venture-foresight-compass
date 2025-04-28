@@ -43,7 +43,7 @@ export const EmbeddingVisualization: React.FC<EmbeddingVisualizationProps> = ({
         <div className="lg:col-span-1">
           <div className="bg-white rounded-lg border border-venture-gray-200 p-4 h-[600px] overflow-y-auto">
             <h2 className="text-lg font-medium text-venture-blue-900 mb-4">
-              {selectedStartup ? 'Potential Investment Firms' : 'Investment Analysis'}
+              {selectedStartup ? 'Top Investing Firms' : 'Investment Analysis'}
             </h2>
             
             {selectedStartup ? (
@@ -51,7 +51,6 @@ export const EmbeddingVisualization: React.FC<EmbeddingVisualizationProps> = ({
                 <StartupCard startup={selectedStartup} />
                 
                 <div className="mt-4">
-                  <h3 className="text-sm font-medium text-venture-gray-600 mb-2">Top Recommended VCs</h3>
                   <div className="space-y-2">
                     {getRecommendedVCs().map((vc, index) => (
                       <div 
