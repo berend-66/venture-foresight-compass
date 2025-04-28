@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { cn } from '@/lib/utils';
 import ScatterPlot from './ScatterPlot';
@@ -44,7 +43,7 @@ export const EmbeddingVisualization: React.FC<EmbeddingVisualizationProps> = ({
         <div className="lg:col-span-1">
           <div className="bg-white rounded-lg border border-venture-gray-200 p-4 h-[600px] overflow-y-auto">
             <h2 className="text-lg font-medium text-venture-blue-900 mb-4">
-              {selectedStartup ? 'Selected Startup' : 'Similarity Analysis'}
+              {selectedStartup ? 'Potential Investment Firms' : 'Investment Analysis'}
             </h2>
             
             {selectedStartup ? (
@@ -52,16 +51,23 @@ export const EmbeddingVisualization: React.FC<EmbeddingVisualizationProps> = ({
                 <StartupCard startup={selectedStartup} />
                 
                 <div className="mt-4">
-                  <h3 className="text-sm font-medium text-venture-gray-600 mb-2">Similar Startups</h3>
+                  <h3 className="text-sm font-medium text-venture-gray-600 mb-2">Top Recommended VCs</h3>
                   <div className="space-y-2">
-                    {getSimilarStartups(startups, selectedStartup).map(startup => (
-                      <StartupCard 
-                        key={startup.id}
-                        startup={startup}
-                        minimal
-                        className="cursor-pointer hover:border-venture-blue-500"
-                        onClick={() => onSelectStartup(startup)}
-                      />
+                    {getRecommendedVCs().map((vc, index) => (
+                      <div 
+                        key={vc.id}
+                        className="bg-white rounded-lg shadow-sm border border-venture-gray-200 p-4"
+                      >
+                        <div className="flex items-center justify-between">
+                          <h3 className="font-medium text-venture-blue-900">{vc.name}</h3>
+                          <span className="text-sm font-medium text-venture-accent-success">
+                            {vc.probability}%
+                          </span>
+                        </div>
+                        <div className="text-xs text-venture-gray-600 mt-1">
+                          {vc.focus}
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -69,7 +75,7 @@ export const EmbeddingVisualization: React.FC<EmbeddingVisualizationProps> = ({
             ) : (
               <div className="flex items-center justify-center h-full">
                 <p className="text-venture-gray-500 text-center p-6">
-                  Select a startup on the map to view details and find similar companies.
+                  Select a startup on the map to view potential investors.
                 </p>
               </div>
             )}
@@ -80,25 +86,15 @@ export const EmbeddingVisualization: React.FC<EmbeddingVisualizationProps> = ({
   );
 };
 
-// Helper function to get similar startups based on coordinate proximity
-function getSimilarStartups(startups: Startup[], target: Startup): Startup[] {
-  if (!target) return [];
-  
-  // Calculate distance between each startup and the target
-  const withDistance = startups
-    .filter(s => s.id !== target.id)
-    .map(startup => {
-      const [x1, y1] = target.coordinates;
-      const [x2, y2] = startup.coordinates;
-      const distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-      return { startup, distance };
-    });
-  
-  // Sort by distance (closest first) and take top 3
-  return withDistance
-    .sort((a, b) => a.distance - b.distance)
-    .slice(0, 3)
-    .map(item => item.startup);
+// Helper function to get recommended VCs with realistic probabilities
+function getRecommendedVCs() {
+  return [
+    { id: '1', name: 'Sequoia Capital', focus: 'Deep Tech · Enterprise Software', probability: 25 },
+    { id: '2', name: 'Andreessen Horowitz', focus: 'AI · Enterprise', probability: 22 },
+    { id: '3', name: 'Accel', focus: 'Enterprise Software · SaaS', probability: 15 },
+    { id: '4', name: 'NEA', focus: 'Deep Tech · Software', probability: 13 },
+    { id: '5', name: 'Lightspeed', focus: 'Enterprise · Deep Tech', probability: 10 }
+  ];
 }
 
 export default EmbeddingVisualization;

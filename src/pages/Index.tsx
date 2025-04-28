@@ -10,7 +10,7 @@ import { AppState, Startup } from '@/types';
 const mockStartups: Startup[] = [
   {
     id: 'startup-1',
-    name: 'QuantFlow',
+    name: 'Antikythera',
     industry: 'Financial Technology',
     sector: 'Finance',
     fundingStage: 'Series B',

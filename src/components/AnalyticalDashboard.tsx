@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -81,7 +80,7 @@ export const AnalyticalDashboard: React.FC<AnalyticalDashboardProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main metrics and radar chart */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-lg border border-venture-gray-200 p-6 mb-6">
+          <div className="bg-white rounded-lg border border-venture-gray-200 p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <h2 className="text-lg font-medium text-venture-blue-900 mb-4">
@@ -154,31 +153,6 @@ export const AnalyticalDashboard: React.FC<AnalyticalDashboardProps> = ({
                   benchmarkData={benchmarkData}
                 />
               </div>
-            </div>
-          </div>
-          
-          <div className="bg-white rounded-lg border border-venture-gray-200 p-6">
-            <h3 className="text-lg font-medium text-venture-blue-900 mb-4">
-              Key Metrics Analysis
-            </h3>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              {Object.entries(selectedStartup.metrics).map(([key, value]) => (
-                <div key={key} className="bg-venture-gray-100 rounded-lg p-4">
-                  <div className="text-sm text-venture-gray-600 mb-1">
-                    {formatMetricName(key)}
-                  </div>
-                  <div className="text-xl font-semibold text-venture-blue-900">
-                    {value}
-                  </div>
-                  <div className="w-full bg-venture-gray-300 h-1.5 rounded-full mt-2">
-                    <div 
-                      className="bg-venture-blue-700 h-1.5 rounded-full" 
-                      style={{ width: `${value}%` }}
-                    ></div>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
