@@ -51,7 +51,7 @@ export const UploadScreen: React.FC<UploadScreenProps> = ({
   };
   
   const simulateProcessing = () => {
-    // Mock processing steps with realistic timing
+    // Mock processing steps with realistic timing but slightly faster
     let progress = 0;
     let currentStage: ProcessingStage = 'uploading';
     
@@ -59,7 +59,7 @@ export const UploadScreen: React.FC<UploadScreenProps> = ({
     const stageProgress = [25, 60, 90, 100]; // Progress thresholds for each stage
     
     const interval = setInterval(() => {
-      progress += Math.random() * 3 + 1; // Random progress between 1-4%
+      progress += Math.random() * 5 + 2; // Random progress between 2-7% (faster than before)
       
       if (progress >= stageProgress[0] && currentStage === 'uploading') {
         currentStage = 'processing';
@@ -113,7 +113,7 @@ export const UploadScreen: React.FC<UploadScreenProps> = ({
           progress: Math.min(progress, 99) // Keep at 99% until complete
         });
       }
-    }, 200);
+    }, 150); // Shorter interval for faster progress
   };
 
   return (
@@ -124,7 +124,7 @@ export const UploadScreen: React.FC<UploadScreenProps> = ({
             Startup Analysis
           </h1>
           <p className="text-venture-gray-600 mb-6">
-            Enter a startup description or upload a pitch deck to analyze its potential and predict which VC funds are most likely to invest.
+            Enter a startup memo and/or upload supplementary material to analyze its potential and predict which funds are most likely to invest.
           </p>
         </div>
 
@@ -142,7 +142,7 @@ export const UploadScreen: React.FC<UploadScreenProps> = ({
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="px-2 bg-background text-venture-gray-500">
-                Or upload a document
+                Upload Document
               </span>
             </div>
           </div>

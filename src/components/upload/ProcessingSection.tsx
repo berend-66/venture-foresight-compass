@@ -35,21 +35,14 @@ export const ProcessingSection: React.FC<ProcessingSectionProps> = ({
         />
       </div>
       
-      {processedStartup && (
-        <div className="animate-fade-in">
-          <h2 className="text-lg font-medium text-venture-blue-900 mb-4">
-            Analysis Results
-          </h2>
-          <StartupCard startup={processedStartup} />
-          
-          <div className="mt-6 text-center">
-            <Button 
-              onClick={() => onComplete(processedStartup)}
-              className="bg-venture-blue-800 hover:bg-venture-blue-700"
-            >
-              View Detailed Analysis
-            </Button>
-          </div>
+      {processedStartup && stage === 'complete' && (
+        <div className="mt-6 text-center">
+          <Button 
+            onClick={() => onComplete(processedStartup)}
+            className="bg-venture-blue-800 hover:bg-venture-blue-700"
+          >
+            View Prediction Results
+          </Button>
         </div>
       )}
     </div>

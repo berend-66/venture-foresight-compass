@@ -16,12 +16,12 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   const navItems = [
     { 
       id: 'upload' as const, 
-      label: 'Pitch Upload', 
+      label: 'Startup Analysis', 
       enabled: true 
     },
     { 
       id: 'visualization' as const, 
-      label: 'Similarity Visualization', 
+      label: 'Prediction Results', 
       enabled: uploadComplete 
     },
     { 
