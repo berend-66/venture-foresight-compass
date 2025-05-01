@@ -36,7 +36,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
       <div className="container flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <span className="font-semibold text-lg text-venture-blue-900">
-            Venture Foresight Compass
+            Algorithm Antikythera V1
           </span>
         </div>
         

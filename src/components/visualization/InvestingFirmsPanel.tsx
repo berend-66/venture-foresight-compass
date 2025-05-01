@@ -37,7 +37,7 @@ const InvestingFirmsPanel: React.FC<InvestingFirmsPanelProps> = ({ selectedStart
                 <div className="flex justify-between items-center">
                   <h3 className="font-medium">{firm.name}</h3>
                   <span className="text-sm bg-venture-blue-100 text-venture-blue-800 px-2 py-1 rounded-full">
-                    {firm.matchScore}% match
+                    {firm.matchScore}% score
                   </span>
                 </div>
                 <p className="text-sm text-venture-gray-600 mt-1">
