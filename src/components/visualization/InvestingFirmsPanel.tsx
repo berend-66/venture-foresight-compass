@@ -2,6 +2,7 @@
 import React from 'react';
 import { Startup } from '@/types';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import StartupCard from '../StartupCard';
 
 interface InvestingFirmsPanelProps {
   selectedStartup?: Startup;

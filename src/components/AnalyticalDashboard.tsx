@@ -8,12 +8,14 @@ import StartupCard from './StartupCard';
 interface AnalyticalDashboardProps {
   startups: Startup[];
   selectedStartup?: Startup;
+  onSelectStartup?: (startup: Startup) => void;
   className?: string;
 }
 
 export const AnalyticalDashboard: React.FC<AnalyticalDashboardProps> = ({
   startups,
   selectedStartup,
+  onSelectStartup,
   className
 }) => {
   const [sortBy, setSortBy] = useState<'matchScore' | 'predictedSuccess'>('matchScore');
@@ -63,6 +65,12 @@ export const AnalyticalDashboard: React.FC<AnalyticalDashboardProps> = ({
       case 'Monitoring': return "bg-venture-gray-500";
       case 'Pass': return "bg-venture-accent-danger";
       default: return "bg-venture-gray-400";
+    }
+  };
+
+  const handleStartupClick = (startup: Startup) => {
+    if (onSelectStartup) {
+      onSelectStartup(startup);
     }
   };
 
@@ -219,8 +227,9 @@ export const AnalyticalDashboard: React.FC<AnalyticalDashboardProps> = ({
                   key={startup.id} 
                   startup={startup}
                   minimal
+                  onClick={() => handleStartupClick(startup)}
                   className={cn(
-                    "transition-all",
+                    "cursor-pointer transition-all",
                     startup.id === selectedStartup.id ? "border-venture-blue-600 shadow-sm" : ""
                   )}
                 />

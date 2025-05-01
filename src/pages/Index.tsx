@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import NavigationBar from '@/components/NavigationBar';
 import UploadScreen from '@/components/UploadScreen';
@@ -298,6 +297,7 @@ const Index = () => {
           <AnalyticalDashboard 
             startups={state.startups}
             selectedStartup={state.selectedStartup}
+            onSelectStartup={handleSelectStartup}
           />
         );
       default:
