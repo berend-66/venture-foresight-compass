@@ -19,10 +19,10 @@ export const EmbeddingVisualization: React.FC<EmbeddingVisualizationProps> = ({
   className
 }) => {
   return (
-    <div className={cn("p-6", className)}>
+    <div className={cn("p-6 max-w-4xl mx-auto", className)}>
       <VisualizationHeader />
       
-      <div className="mx-auto max-w-3xl">
+      <div className="mt-8">
         <InvestingFirmsPanel selectedStartup={selectedStartup} />
       </div>
     </div>
